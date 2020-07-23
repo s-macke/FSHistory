@@ -13,7 +13,11 @@ See how it all began. Play the first four flight simulator games Microsoft devel
 
 # Technical aspects
 
-Always when I start a new project I wonder what programming language I should use. Most of the time the requirements the same. It must be fast, typed and the result must presentable on a website. Especially I would like to keep it as simple as possible. C is usually my language of choice when the logic doesn.'t get too complicated. And this is exactly the case for such emulators. Low level hardware emulation on a low level language. Perfect!. C is also the natural choice for webassembly as the language features fit perfect. It is like you write an ordinary C-library. clang of [LLVM](https://llvm.org/) offers the ideal compiler infractstructure to create customized webassembly files without any boilerplate code. As such my code implements parts of the libc such as printf, malloc and memcpy. Just enough to run the emulator. The result is a very fast loading website.
+Always when I start a new project I wonder what programming language I should use. Most of the time the requirements the same. It must be fast, typed and the result must presentable on a website. Especially I would like to keep it as simple as possible. C is usually my language of choice when the logic doesn.'t get too complicated. And this is exactly the case for such emulators. Low level hardware emulation on a low level language. Perfect!. 
+
+C is also the natural choice for webassembly as the language features fit perfect. It is like you write an ordinary C-library. 
+
+clang of [LLVM](https://llvm.org/) offers the ideal compiler infractstructure to create customized webassembly files without any boilerplate code. As such my code implements parts of the libc such as printf, malloc and memcpy. Just enough to run the emulator. The result is a very fast loading website.
 
 In short, this is the technical feature list
 
