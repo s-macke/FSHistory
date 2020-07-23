@@ -1,9 +1,11 @@
-# FSHistory
+FSHistory
+=========
+
 Play and Enjoy the History of Microsoft Flight Simulator
 
-![web demonstration](images/slides.gif)
+# **[Click to play][project demo]**
 
-# **[Clock to play][project demo]**
+![web demonstration](images/slides.gif)
 
 ## License
 
