@@ -56,3 +56,6 @@ dkms.conf
 
 # executable
 fshistory
+
+# filesystem
+*.fs
