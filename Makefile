@@ -111,4 +111,4 @@ ems.o: src/devices/ems.c src/devices/ems.h
 
 .PHONY: clean
 clean:
-	rm -f *.o dos
+	rm -f *.o fshistory

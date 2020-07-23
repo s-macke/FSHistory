@@ -157,9 +157,9 @@ void Run(int steps) {
 #else
     //disasmcsip(1);
     exec86(steps);
-    #ifndef __wasm__
-        if ((count&0xFFFF) == 0) UpdateScreen();
-    #endif
+    //#ifndef __wasm__
+        if ((count&0xF) == 0) UpdateScreen();
+    //#endif
 #endif
     count++;
     /*
@@ -178,7 +178,6 @@ int main() {
     while (1) {
         Run(0x5FFFF);
         //Run(0x001FF);
-
         //SDLDelay(50);
     }
 }
