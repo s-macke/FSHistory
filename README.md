@@ -7,15 +7,15 @@ Play and Enjoy the History of Microsoft Flight Simulator
 
 ![web demonstration](images/slides.gif)
 
-This repository emulates an x86 CPU and DOS, enough to emulate the first four Microsoft Flight Simulator games.
+This repository lets you play the first four Flight Simulators from Microsoft.
 
 The key features are:
 
  * Emulates an 80x86 and features from a 286 and a 386 CPU.
  * Implements DOS and BIOS functions similar to DOSBOX.
  * Developed in C.
- * Compiles to a normal executable by using the Simple DirectMedia Layer (SDL).
- * Compiles to webassembly via the llvm compiler by using my own trivial libc implementation.
+ * Compiles to an ordinary executable by using the Simple DirectMedia Layer (SDL).
+ * Compiles to WebAssembly via the LLVM compiler by using my own trivial libc implementation.
 
 ## License
 
