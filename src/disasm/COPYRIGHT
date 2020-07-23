@@ -1,0 +1,68 @@
+
+All files, documentation etc with the exception of 'mfs.c',
+'emufs.sys', 'emufs.S', 'lredir.exe', 'lredir.c' and 'lredir.readme'
+are Copyright (C) 1994 University of Bristol, England
+
+Permission is granted to use, copy, modify, and distribute this
+software and its documentation for any non-commercial purpose,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in the
+supporting documentation.
+
+BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.  EXCEPT
+WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
+PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+PROGRAM IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR
+DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL
+DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM
+(INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED
+INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A FAILURE OF
+THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER
+OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+---------------------------------------------------------------------
+
+'mfs.c', 'emufs.sys' and 'emufs.S' are covered by the following
+notice:
+
+ Mach Operating System
+ Copyright (c) 1993,1992,1991,1990 Carnegie Mellon University
+ Copyright (c) 1991 IBM Corporation 
+ All Rights Reserved.
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation,
+ and that the nema IBM not be used in advertising or publicity 
+ pertaining to distribution of the software without specific, written
+ prior permission.
+ 
+ CARNEGIE MELLON AND IBM ALLOW FREE USE OF THIS SOFTWARE IN ITS "AS IS"
+ CONDITION.  CARNEGIE MELLON AND IBM DISCLAIM ANY LIABILITY OF ANY KIND FOR
+ ANY DAMAGES WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Carnegie Mellon requests users of this software to return to
+ 
+  Software Distribution Coordinator  or  Software.Distribution@CS.CMU.EDU
+  School of Computer Science
+  Carnegie Mellon University
+  Pittsburgh PA 15213-3890
+ 
+ any improvements or extensions that they make and grant Carnegie Mellon
+ the rights to redistribute these changes.
+
+--------------------------------------------------------------------
+
+'lredir' was written by Tim Bird (Tim_R_Bird@Novell.COM)
+
