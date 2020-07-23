@@ -59,6 +59,3 @@ fshistory
 
 # filesystem
 *.fs
-
-# webassembly
-*.wasm
