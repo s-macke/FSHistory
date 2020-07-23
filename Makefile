@@ -6,7 +6,7 @@ OBJS = main.o mz.o ram.o debugger.o cpu.o vga.o ports.o dos.o alloc.o keyb.o   \
 	sdl.o screen.o rom.o fs.o bios.o fonts.o pic.o pit.o mouse.o      \
 	clock.o fs4.o exit_strategy.o disk.o multiplex.o compare.o ems.o
 
-all: fshistory fs1.fs fs2.fs fs3.fs fs4.fs
+all: fshistory data/fs1.fs data/fs2.fs data/fs3.fs data/fs4.fs
 
 fshistory: ${OBJS}
 	${CC} -o fshistory ${OBJS} ${LDFLAGS}
@@ -28,16 +28,16 @@ fshistory.wasm: ${OBJS} libc.o
 	--export=MouseMotion                                    \
 	-o fshistory.wasm ${OBJS} libc.o
 
-fs1.fs: data/fs1.fs.bz2
+data/fs1.fs: data/fs1.fs.bz2
 	bzip2 -dk data/fs1.fs.bz2
 
-fs2.fs: data/fs2.fs.bz2
+data/fs2.fs: data/fs2.fs.bz2
 	bzip2 -dk data/fs2.fs.bz2
 
-fs3.fs: data/fs3.fs.bz2
+data/fs3.fs: data/fs3.fs.bz2
 	bzip2 -dk data/fs3.fs.bz2
 
-fs4.fs: data/fs4.fs.bz2
+data/fs4.fs: data/fs4.fs.bz2
 	bzip2 -dk data/fs4.fs.bz2
 
 libc.o: src/wasm_libc_wrapper
