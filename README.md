@@ -13,17 +13,17 @@ See how it all began. Play the first four flight simulator games Microsoft devel
 
 # Technical aspects
 
-Always when I start a new project I wonder what programming language I should use. Most of the time the requirements the same. It must be fast, typed and the result must presentable on a website. Especially I would like to keep it as simple as possible. C is usually my language of choice when the logic doesn.'t get too complicated. And this is exactly the case for such emulators. Low level hardware emulation on a low level language. Perfect!. 
+Always when I start a new project I wonder what programming language I should use. Most of the time the requirements are the same. It must be fast, typed and the result must presentable on a website. Especially I would like to keep it as simple as possible. C is usually my language of choice when the logic doesn't get too complicated. And this is exactly the case for such emulators. Low level hardware emulation on a low level language.
 
-C is also the natural choice for webassembly as the language features fit perfect. It is like you write an ordinary C-library. 
+C is also the natural choice for WebAssembly as the language features fit perfect. It is like you write an ordinary C-library.
 
-clang of the [LLVM project](https://llvm.org/) offers the ideal compiler infractstructure to create customized webassembly files without any additional runtime code. As such my code implements parts of the libc such as printf, malloc and memcpy. Just enough to run the emulator. The result is a very fast loading website.
+clang of the [LLVM project](https://llvm.org/) offers the ideal compiler infractstructure to create customized WebAssembly files without any additional runtime code. As such my code implements parts of the libc such as printf, malloc and memcpy. Just enough to run the emulator. The result is a project that compiles naturally as a native executable and runs in the browser with just is a few hundred lines.
 
 In short, this is the technical feature list
 
  * Developed in C.
- * Emulates an 80x86 and features from a 286 and a 386 CPU.
- * Emulates keyboard, mice, graphics, interrupt controller, timer controller
+ * Emulates an 8086 and features from a 286 and a 386 CPU.
+ * Emulates keyboard, mouse, graphics, interrupt controller, timer controller.
  * Implements DOS and BIOS functions similar to DOSBOX.
  * Compiles to an ordinary executable by using the Simple DirectMedia Layer (SDL).
  * Compiles to WebAssembly via the LLVM compiler by using my own trivial libc implementation.
