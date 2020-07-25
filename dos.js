@@ -381,6 +381,7 @@ function Loop() {
     if (doStopLoop) return;
 
     let delta = getDeltaMs();
+    if (delta > 60) delta = 60; // just make sure the browser is not locked forever
     game.Run(delta*5000);
     //game.Run(500000);
     game.UpdateScreen();
