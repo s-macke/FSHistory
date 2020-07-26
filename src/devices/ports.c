@@ -52,7 +52,7 @@ void portout(uint16_t portnum, uint8_t value) {
         case 0x3c9:
         case 0x3ce:
         case 0x3cf:
-		case 0x3d0:
+        case 0x3d0:
         case 0x3d4:
         case 0x3d5:
         case 0x3d8:
@@ -70,7 +70,7 @@ void portout(uint16_t portnum, uint8_t value) {
         default:
             printf("Error: portout8 unknown port 0x%04x\n", portnum);
             PrintStatus();
-			exit_or_restart(1);
+            exit_or_restart(1);
             break;
     }
 }
@@ -96,7 +96,7 @@ void portout16(uint16_t portnum, uint16_t value) {
         default:
             printf("Error: portout16 unknown port 0x%04x\n", portnum);
             PrintStatus();
-			exit_or_restart(1);
+            exit_or_restart(1);
             break;
     }
 }
@@ -125,8 +125,8 @@ uint8_t portin(uint16_t portnum) {
         default:
             printf("Error: portin unknown port 0x%04x\n", portnum);
             PrintStatus();
-			exit_or_restart(1);
-			return 0;
+            exit_or_restart(1);
+            return 0;
     }
 }
 
@@ -134,6 +134,6 @@ uint16_t portin16(uint16_t portnum) {
 #ifdef DEBUG
     printf("portin16: 0x%04x\n", portnum);
 #endif
-	exit_or_restart(1);
-	return 0;
+    exit_or_restart(1);
+    return 0;
 }

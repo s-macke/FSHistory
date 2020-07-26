@@ -62,9 +62,9 @@ void ROMExec(uint8_t intno, uint32_t addr) {
             Keyboard_Bios();
             break;
 
-		case 0x1A:
-			Clock_Bios();
-			break;
+        case 0x1A:
+            Clock_Bios();
+            break;
 
         case 0x1C:
             // User timer interrupt. Ignore
@@ -72,7 +72,7 @@ void ROMExec(uint8_t intno, uint32_t addr) {
 
         case 0x20:
             printf("program termination\n");
-			exit_or_restart(0);
+            exit_or_restart(0);
             break;
 
         case 0x21:
@@ -99,7 +99,7 @@ void ROMExec(uint8_t intno, uint32_t addr) {
         default:
             printf("unknown interrupt 0x%02x\n", intno);
             PrintStatus();
-			exit_or_restart(1);
+            exit_or_restart(1);
             break;
     }
 }

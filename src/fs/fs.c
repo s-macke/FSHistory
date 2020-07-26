@@ -20,9 +20,9 @@ void toLowerCase(char *pstr) {
 }
 
 char* GetMountStorage(uint32_t size) {
-	fsdata = malloc(size);
-	fssize = size;
-	return fsdata;
+    fsdata = malloc(size);
+    fssize = size;
+    return fsdata;
 }
 
 void FillFileFS(FILEFS *filefs, char* ptr) {
@@ -78,29 +78,29 @@ void WriteFile(FILEFS *file, uint8_t* data, int size, int offset) {
 
 
 int EndsWith(const char *str, const char *suffix) {
-	if (!str || !suffix)
-		return 0;
-	size_t lenstr = strlen(str);
-	size_t lensuffix = strlen(suffix);
-	if (lensuffix > lenstr)
-		return 0;
-	return strncmp(str + lenstr - lensuffix, suffix, lensuffix) == 0;
+    if (!str || !suffix)
+        return 0;
+    size_t lenstr = strlen(str);
+    size_t lensuffix = strlen(suffix);
+    if (lensuffix > lenstr)
+        return 0;
+    return strncmp(str + lenstr - lensuffix, suffix, lensuffix) == 0;
 }
 
 FILEFS *FindFile(const char *_filename, uint16_t *index) {
-	char filename[256];
-	memset(filename, 0, sizeof(filename));
-	printf("Find file '%s'\n", _filename);
+    char filename[256];
+    memset(filename, 0, sizeof(filename));
+    printf("Find file '%s'\n", _filename);
     strcpy(filename, _filename);
-	toLowerCase(filename);
+    toLowerCase(filename);
 
-	for(; (*index) < nfiles; (*index)++) {
-		if (filename[0] == '*') {
-			if (EndsWith(files[*index].filename, &filename[1])) return &files[*index];
-		} else {
-			//printf("compare with '%s' '%s'\n", filename, fs[*index].filename);
-			if (strcmp(filename, files[*index].filename) == 0) return &files[*index];
-		}
-	}
-	return NULL;
+    for(; (*index) < nfiles; (*index)++) {
+        if (filename[0] == '*') {
+            if (EndsWith(files[*index].filename, &filename[1])) return &files[*index];
+        } else {
+            //printf("compare with '%s' '%s'\n", filename, fs[*index].filename);
+            if (strcmp(filename, files[*index].filename) == 0) return &files[*index];
+        }
+    }
+    return NULL;
 }

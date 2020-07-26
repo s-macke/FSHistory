@@ -49,9 +49,9 @@ uint8_t PIT_in(uint16_t portnum) {
             }
         default:
             printf("unknown PIT port %i\n", portnum);
-			exit_or_restart(1);
+            exit_or_restart(1);
     }
-	exit_or_restart(1);
+    exit_or_restart(1);
     return 0x0;
 }
 
@@ -83,13 +83,13 @@ void PIT_out(uint16_t portnum, uint8_t value) {
 
         default:
             printf("unknown PIT port %i\n", portnum);
-			exit_or_restart(1);
+            exit_or_restart(1);
     }
 
 }
 
 void PIT_Init() {
-	io_hi_lo = 0;
-	timerdata0 = 100000;
+    io_hi_lo = 0;
+    timerdata0 = 100000;
     counter0 = timerdata0;
 }

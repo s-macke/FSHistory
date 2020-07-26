@@ -8,10 +8,10 @@ uint32_t *pixels = 0;
 float *zbuffer = 0;
 
 void ScreenInit() {
-	if (pixels == 0) {
-		pixels = malloc(sizeof(int32_t) * SCREEN_WIDTH * SCREEN_HEIGHT);
-		zbuffer = malloc(sizeof(float) * SCREEN_WIDTH * SCREEN_HEIGHT);
-	}
+    if (pixels == 0) {
+        pixels = malloc(sizeof(int32_t) * SCREEN_WIDTH * SCREEN_HEIGHT);
+        zbuffer = malloc(sizeof(float) * SCREEN_WIDTH * SCREEN_HEIGHT);
+    }
     ScreenClear();
 }
 

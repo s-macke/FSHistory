@@ -24,26 +24,26 @@ inline uint8_t Read8(uint32_t addr) {
     addr &= 0xFFFFF;
     //printf("Read8 at 0x%08x\n", addr);
 
-	/* TODO
-	if (addr == 0x3963D)
-	{
-		//if (segregs[regcs] == 0x3960) // ega1.gra
-		printf("read abcd 0x%04x:0x%04x\n", segregs[regcs], ip);
-		//file->data[0x3D] = 0x46;
-	}
-	 */
+    /* TODO
+    if (addr == 0x3963D)
+    {
+        //if (segregs[regcs] == 0x3960) // ega1.gra
+        printf("read abcd 0x%04x:0x%04x\n", segregs[regcs], ip);
+        //file->data[0x3D] = 0x46;
+    }
+     */
 
 /* TODO
-	if (segregs[regcs] == 0x3960) // ega1.gra
-	{
-		// write to 0x1000
-		if ((addr >= 0x10000) && (addr <= 0x20000)) {
-		//if (ip == 0x10F4) {
-			//printf("0x%04x\n", segregs[regds]);
-			printf("abcdefgh 0x%04x read\n", addr);
-			//exit_or_restart(1);
-		}
-	}
+    if (segregs[regcs] == 0x3960) // ega1.gra
+    {
+        // write to 0x1000
+        if ((addr >= 0x10000) && (addr <= 0x20000)) {
+        //if (ip == 0x10F4) {
+            //printf("0x%04x\n", segregs[regds]);
+            printf("abcdefgh 0x%04x read\n", addr);
+            //exit_or_restart(1);
+        }
+    }
 */
 
 #ifdef DEBUG
@@ -77,19 +77,19 @@ inline uint8_t Read8(uint32_t addr) {
 inline void Write8(uint32_t addr, uint8_t x) {
     //CheckBoundary(addr);
     addr &= 0xFFFFFu;
-	// TODO
-	/*
-	if (segregs[regcs] == 0x3960) // ega1.gra
-	{
-		// write to 0x1000
-		if ((addr >= 0x10000) && (addr <= 0x20000)) {
-			//if (ip == 0x10F4) {
-			//printf("0x%04x\n", segregs[regds]);
-			printf("abcdefgh 0x%04x write\n", addr);
-			//exit_or_restart(1);
-		}
-	}
-	*/
+    // TODO
+    /*
+    if (segregs[regcs] == 0x3960) // ega1.gra
+    {
+        // write to 0x1000
+        if ((addr >= 0x10000) && (addr <= 0x20000)) {
+            //if (ip == 0x10F4) {
+            //printf("0x%04x\n", segregs[regds]);
+            printf("abcdefgh 0x%04x write\n", addr);
+            //exit_or_restart(1);
+        }
+    }
+    */
 
     if (addr >= 0xa0000 && addr < 0xc0000) VGA_write(addr - 0xa0000, x);
     ram[addr] = x;
@@ -151,10 +151,10 @@ inline uint32_t Read32Long(uint16_t s, uint16_t o) {
 }
 
 void RAMInit() {
-	if (ram == 0) {
-		ram = malloc(1024 * 1024 + 65536);
-	}
-	memset(ram, 0, 1024 * 1024 + 65536);
+    if (ram == 0) {
+        ram = malloc(1024 * 1024 + 65536);
+    }
+    memset(ram, 0, 1024 * 1024 + 65536);
 }
 
 

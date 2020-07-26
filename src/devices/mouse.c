@@ -82,7 +82,7 @@ void MouseInterrupt() {
 
         default:
             printf("Error: Unknown Mouse Bios function: 0x%04x\n", ax);
-			exit_or_restart(1);
+            exit_or_restart(1);
             break;
 
     }

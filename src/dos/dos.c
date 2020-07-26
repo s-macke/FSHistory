@@ -65,14 +65,14 @@ static uint16_t dtaofs = 0x0;
 static uint16_t pspseg = 0x1000-16; // program segment prefix
 
 void HandleIOCTL() {
-	uint16_t al = regs.byteregs[regal];
-	uint32_t h = regs.wordregs[regbx];
-	printf("DOS: IOCTL handle: 0x%04x\n", h);
+    uint16_t al = regs.byteregs[regal];
+    uint32_t h = regs.wordregs[regbx];
+    printf("DOS: IOCTL handle: 0x%04x\n", h);
 
-	switch (al) {
+    switch (al) {
 
-		case 0: // get device information
-			// http://stanislavs.org/helppc/int_21-44-0.html
+        case 0: // get device information
+            // http://stanislavs.org/helppc/int_21-44-0.html
             if (handle[h].isactive) {
                 regs.wordregs[regax] = handle[h].device_information; // error code, but no error. dosbox fill this register
                 regs.wordregs[regdx] = handle[h].device_information;
@@ -83,19 +83,19 @@ void HandleIOCTL() {
                 printf("Unknown IOCTL %i\n", h);
                 //exit_or_restart(1);
             }
-			break;
+            break;
 
-	    case 7: // get output status, currently only used for emm device
+        case 7: // get output status, currently only used for emm device
             // https://stanislavs.org/helppc/int_21-44-7.html
             ClearCFInInterrupt();
             regs.byteregs[regal] = 0xff; // ready
-	        break;
+            break;
 
-		default:
-			printf("DOS: Unknown DOS IOCTL function 0x%02x\n", al);
-			exit_or_restart(1);
-			break;
-	}
+        default:
+            printf("DOS: Unknown DOS IOCTL function 0x%02x\n", al);
+            exit_or_restart(1);
+            break;
+    }
 }
 
 
@@ -103,15 +103,15 @@ void HandleIOCTL() {
 
 void ReadFilename(char *filename) {
     filename[12] = 0;
-	printf("'");
-	for (int i = 0; i < 30; i++) {
-		char c = Read8Long(segregs[regds], regs.wordregs[regdx] + i);
-		filename[i] = c;
-		if (c == 0) break;
-		printf("%c", c);
-	}
-	printf("'");
-	printf("\n");
+    printf("'");
+    for (int i = 0; i < 30; i++) {
+        char c = Read8Long(segregs[regds], regs.wordregs[regdx] + i);
+        filename[i] = c;
+        if (c == 0) break;
+        printf("%c", c);
+    }
+    printf("'");
+    printf("\n");
 }
 
 void ReadParameter(char *parameter) {
@@ -128,36 +128,36 @@ void ReadParameter(char *parameter) {
 
 
 void HandleDosInterrupt() {
-	char filename[30];
+    char filename[30];
 
-	uint16_t ah = regs.byteregs[regah];
-	uint16_t al = regs.byteregs[regal];
-	printf("DOS: ah: 0x%02x, al: 0x%02x\n", ah, al);
+    uint16_t ah = regs.byteregs[regah];
+    uint16_t al = regs.byteregs[regal];
+    printf("DOS: ah: 0x%02x, al: 0x%02x\n", ah, al);
 
-	switch (ah) {
+    switch (ah) {
 
         case 0x00: // terminate program
             printf("DOS: terminate\n");
             exit_or_restart(0);
             break;
 
-		case 0x02: // character output
-			printf("DOS: write text: %c\n", regs.byteregs[regdl]);
-			break;
+        case 0x02: // character output
+            printf("DOS: write text: %c\n", regs.byteregs[regdl]);
+            break;
 
-		case 0x06: // character output
-		{
-			uint8_t c = regs.byteregs[regdl];
-			if (c == 0xFF)
-			{
-				printf("DOS: Not supported input request\n");
-				exit_or_restart(1);
-			}
-			printf("DOS: write direct console I/O: %c\n", c);
-			ClearCFInInterrupt();
-			//exit_or_restart(1);
-			break;
-		}
+        case 0x06: // character output
+        {
+            uint8_t c = regs.byteregs[regdl];
+            if (c == 0xFF)
+            {
+                printf("DOS: Not supported input request\n");
+                exit_or_restart(1);
+            }
+            printf("DOS: write direct console I/O: %c\n", c);
+            ClearCFInInterrupt();
+            //exit_or_restart(1);
+            break;
+        }
 
         case 0x09: // string output
         {
@@ -173,106 +173,106 @@ void HandleDosInterrupt() {
         }
 
         case 0x19: //  Get Current Default Drive
-			printf("DOS: get default drive\n");
-			regs.byteregs[regal] = 0; // A: drive
-			break;
+            printf("DOS: get default drive\n");
+            regs.byteregs[regal] = 0; // A: drive
+            break;
 
-		case 0x2a: // get date
-			regs.wordregs[regax] = 0; // Sunday
-			regs.wordregs[regcx] = 2020; // year
-			regs.byteregs[regdh] = 6; // summer
-			regs.byteregs[regdl] = 0; // day
-			break;
+        case 0x2a: // get date
+            regs.wordregs[regax] = 0; // Sunday
+            regs.wordregs[regcx] = 2020; // year
+            regs.byteregs[regdh] = 6; // summer
+            regs.byteregs[regdl] = 0; // day
+            break;
 
-		case 0x2c: // get time
-			// http://stanislavs.org/helppc/int_21-2c.html
-			regs.wordregs[regcx] = 0;
-			regs.wordregs[regdx] = 0;
-			printf("DOS: get time\n");
-			break;
+        case 0x2c: // get time
+            // http://stanislavs.org/helppc/int_21-2c.html
+            regs.wordregs[regcx] = 0;
+            regs.wordregs[regdx] = 0;
+            printf("DOS: get time\n");
+            break;
 
-		case 0x25: // set interrupt vector
-		{
-			uint32_t intno = al & 0xFF;
-			printf("DOS: set interrupt vector : 0x%02x to 0x%04x:0x%04x\n", intno, segregs[regds], regs.wordregs[regdx]);
-			Write16((intno << 2) + 2, segregs[regds]);
-			Write16((intno << 2) + 0, regs.wordregs[regdx]);
-			break;
-		}
+        case 0x25: // set interrupt vector
+        {
+            uint32_t intno = al & 0xFF;
+            printf("DOS: set interrupt vector : 0x%02x to 0x%04x:0x%04x\n", intno, segregs[regds], regs.wordregs[regdx]);
+            Write16((intno << 2) + 2, segregs[regds]);
+            Write16((intno << 2) + 0, regs.wordregs[regdx]);
+            break;
+        }
 
-		case 0x1a: // set disk transfer access
-			// http://stanislavs.org/helppc/int_21-2a.html
-			printf("DOS: set disk transfer access structure 0x%04x:0x%04x\n", segregs[regds], regs.wordregs[regdx]);
-			dtaseg = segregs[regds];
-			dtaofs = regs.wordregs[regdx];
-			break;
+        case 0x1a: // set disk transfer access
+            // http://stanislavs.org/helppc/int_21-2a.html
+            printf("DOS: set disk transfer access structure 0x%04x:0x%04x\n", segregs[regds], regs.wordregs[regdx]);
+            dtaseg = segregs[regds];
+            dtaofs = regs.wordregs[regdx];
+            break;
 
-		case 0x2d: // set time
-			regs.byteregs[regal] = 0x00;
-			break;
+        case 0x2d: // set time
+            regs.byteregs[regal] = 0x00;
+            break;
 
-		case 0x2b: // set date
-			regs.byteregs[regal] = 0x00;
-			break;
+        case 0x2b: // set date
+            regs.byteregs[regal] = 0x00;
+            break;
 
 
-		case 0x2f: // get disk transfer access
-			// http://stanislavs.org/helppc/int_21-2f.html
-			printf("DOS: get disk transfer access structure\n");
-			regs.wordregs[regbx] = dtaofs;
-			segregs[reges] = dtaseg;
-			break;
+        case 0x2f: // get disk transfer access
+            // http://stanislavs.org/helppc/int_21-2f.html
+            printf("DOS: get disk transfer access structure\n");
+            regs.wordregs[regbx] = dtaofs;
+            segregs[reges] = dtaseg;
+            break;
 
-		case 0x30: // DOS version number TODO
-			// https://www.i8086.de/dos-int-21h/funktion-30.html
-			//regs.wordregs[regax] = 0; // this is actually version 1, // version 1, to prevent the call of function 52h http://stanislavs.org/helppc/int_21-52.html
+        case 0x30: // DOS version number TODO
+            // https://www.i8086.de/dos-int-21h/funktion-30.html
+            //regs.wordregs[regax] = 0; // this is actually version 1, // version 1, to prevent the call of function 52h http://stanislavs.org/helppc/int_21-52.html
             regs.wordregs[regax] = 5; // dosbox
-			//exit_or_restart(1);
-			//regs.wordregs[regax] = 1; // version 1, to prevent the call of function 52h http://stanislavs.org/helppc/int_21-52.html
-			regs.wordregs[regbx] = 0xFF00;
-			regs.wordregs[regcx] = 0;
-			break;
+            //exit_or_restart(1);
+            //regs.wordregs[regax] = 1; // version 1, to prevent the call of function 52h http://stanislavs.org/helppc/int_21-52.html
+            regs.wordregs[regbx] = 0xFF00;
+            regs.wordregs[regcx] = 0;
+            break;
 
-		case 0x33: // get set system values, ctrl-break checking http://stanislavs.org/helppc/int_21-33.html
-		{
-			printf("DOS: get set Ctrl-Break checking al=%i dl=%i\n", regs.byteregs[regal], regs.byteregs[regdl]);
-			regs.byteregs[regdl] = 0; // always off
-			break;
-		}
+        case 0x33: // get set system values, ctrl-break checking http://stanislavs.org/helppc/int_21-33.html
+        {
+            printf("DOS: get set Ctrl-Break checking al=%i dl=%i\n", regs.byteregs[regal], regs.byteregs[regdl]);
+            regs.byteregs[regdl] = 0; // always off
+            break;
+        }
 
-		case 0x35: // get interrupt vector
-		{
-			uint32_t intno = al & 0xFF;
-			printf("DOS: get interrupt vector : 0x%02x\n", intno);
-			segregs[reges] = Read16((intno << 2) + 2);
-			regs.wordregs[regbx] = Read16((intno << 2) + 0);
-			break;
-		}
+        case 0x35: // get interrupt vector
+        {
+            uint32_t intno = al & 0xFF;
+            printf("DOS: get interrupt vector : 0x%02x\n", intno);
+            segregs[reges] = Read16((intno << 2) + 2);
+            regs.wordregs[regbx] = Read16((intno << 2) + 0);
+            break;
+        }
 
-		case 0x3c: // Create File Using Handle
-		{
-			//http://stanislavs.org/helppc/file_attributes.html
-			uint16_t attributes = regs.wordregs[regcx];
-			printf("DOS: create file mode : 0x%04x ", attributes);
-			int nextfreehandle;
-			for(nextfreehandle=5; nextfreehandle<255; nextfreehandle++) if (!handle[nextfreehandle].isactive) break;
-			ReadFilename(handle[nextfreehandle].filename);
+        case 0x3c: // Create File Using Handle
+        {
+            //http://stanislavs.org/helppc/file_attributes.html
+            uint16_t attributes = regs.wordregs[regcx];
+            printf("DOS: create file mode : 0x%04x ", attributes);
+            int nextfreehandle;
+            for(nextfreehandle=5; nextfreehandle<255; nextfreehandle++) if (!handle[nextfreehandle].isactive) break;
+            ReadFilename(handle[nextfreehandle].filename);
             handle[nextfreehandle].file = CreateFile(handle[nextfreehandle].filename);
             handle[nextfreehandle].isactive = true;
             handle[nextfreehandle].isfile = true;
-			handle[nextfreehandle].offset = 0;
+            handle[nextfreehandle].offset = 0;
             handle[nextfreehandle].device_information = 0; // just a file
 
-			ClearCFInInterrupt();
-			regs.wordregs[regax] = nextfreehandle;
-			break;
-		}
+            ClearCFInInterrupt();
+            regs.wordregs[regax] = nextfreehandle;
+            break;
+        }
 
-		case 0x3d: // Open File Using Handle
-		{
-			uint32_t accessmode = al;
-			printf("DOS: open file mode : 0x%02x ", accessmode);
-			ReadFilename(filename);
+        case 0x3d: // Open File Using Handle
+        {
+            uint32_t accessmode = al;
+            printf("DOS: open file mode : 0x%02x ", accessmode);
+            ReadFilename(filename);
             int nextfreehandle;
             for(nextfreehandle=5; nextfreehandle<255; nextfreehandle++) if (!handle[nextfreehandle].isactive) break;
 
@@ -287,80 +287,80 @@ void HandleDosInterrupt() {
             }
 
             uint16_t index = 0;
-			FILEFS *file = FindFile(filename, &index);
-			if (file == NULL) {
-				printf("DOS: Warn: file not found\n");
-				SetCFInInterrupt();
-				regs.wordregs[regax] = 0x2; // File not found
-				//PrintStatus();
-				//exit_or_restart(1);
-			} else {
-				printf("DOS: handle 0x%02x\n", nextfreehandle);
-				handle[nextfreehandle].file = file;
-				handle[nextfreehandle].isfile = true;
+            FILEFS *file = FindFile(filename, &index);
+            if (file == NULL) {
+                printf("DOS: Warn: file not found\n");
+                SetCFInInterrupt();
+                regs.wordregs[regax] = 0x2; // File not found
+                //PrintStatus();
+                //exit_or_restart(1);
+            } else {
+                printf("DOS: handle 0x%02x\n", nextfreehandle);
+                handle[nextfreehandle].file = file;
+                handle[nextfreehandle].isfile = true;
                 handle[nextfreehandle].isactive = true;
-				handle[nextfreehandle].offset = 0;
+                handle[nextfreehandle].offset = 0;
                 handle[nextfreehandle].device_information = 0x0000; // a file
-				strcpy(handle[nextfreehandle].filename, file->filename);
-				ClearCFInInterrupt();
-				regs.wordregs[regax] = nextfreehandle;
-			}
-			break;
-		}
+                strcpy(handle[nextfreehandle].filename, file->filename);
+                ClearCFInInterrupt();
+                regs.wordregs[regax] = nextfreehandle;
+            }
+            break;
+        }
 
-		case 0x3e: // close file
-		{
-			uint16_t h = regs.wordregs[regbx];
-			printf("DOS: close file : 0x%02x '%s'\n", h, handle[h].filename);
-			ClearCFInInterrupt();
+        case 0x3e: // close file
+        {
+            uint16_t h = regs.wordregs[regbx];
+            printf("DOS: close file : 0x%02x '%s'\n", h, handle[h].filename);
+            ClearCFInInterrupt();
             handle[h].isactive = false;
-			handle[h].file = NULL;
-			break;
-		}
+            handle[h].file = NULL;
+            break;
+        }
 
-		case 0x3f: // read from file or device using handle
-		{
-			uint16_t h = regs.wordregs[regbx];
-			uint32_t size = regs.wordregs[regcx];
-			printf("DOS: read from handle : 0x%02x, '%s' offset: %5i, size: %5i to 0x%04x:0x%04x ",
-					h, handle[h].filename, handle[h].offset, size, segregs[regds], regs.wordregs[regdx]);
-			if (handle[h].isactive == false) {
-				printf("DOS: Error: handle not used\n");
-				exit_or_restart(1);
-			}
+        case 0x3f: // read from file or device using handle
+        {
+            uint16_t h = regs.wordregs[regbx];
+            uint32_t size = regs.wordregs[regcx];
+            printf("DOS: read from handle : 0x%02x, '%s' offset: %5i, size: %5i to 0x%04x:0x%04x ",
+                    h, handle[h].filename, handle[h].offset, size, segregs[regds], regs.wordregs[regdx]);
+            if (handle[h].isactive == false) {
+                printf("DOS: Error: handle not used\n");
+                exit_or_restart(1);
+            }
             if (handle[h].isfile == false) {
                 printf("DOS: Error: Try to read from none-file\n");
                 exit_or_restart(1);
             }
-			//printf("DOS: offset:%i size:%i\n", handle[h].offset, size);
-			if (size + handle[h].offset >= handle[h].file->size) {
-				size = handle[h].file->size - handle[h].offset;
-			}
-			if (size < 0) size = 0;
-			printf(" read size:%i\n", size);
-			//exit_or_restart(1);
-			for (int i = 0; i < size; i++) {
-				Write8((((uint32_t) segregs[regds] << 4)) + ((uint32_t) regs.wordregs[regdx]) + i,
-					   handle[h].file->data[handle[h].offset++]);
-			}
-			if (size == 0) {
-				regs.wordregs[regax] = size;
+            //printf("DOS: offset:%i size:%i\n", handle[h].offset, size);
+            if (size + handle[h].offset >= handle[h].file->size) {
+                size = handle[h].file->size - handle[h].offset;
+            }
+            if (size < 0) size = 0;
+            printf(" read size:%i\n", size);
+            //exit_or_restart(1);
+            for (int i = 0; i < size; i++) {
+                Write8((((uint32_t) segregs[regds] << 4)) + ((uint32_t) regs.wordregs[regdx]) + i,
+                       handle[h].file->data[handle[h].offset++]);
+            }
+            if (size == 0) {
+                regs.wordregs[regax] = size;
                 ClearCFInInterrupt();
-			} else {
-				regs.wordregs[regax] = size;
-				ClearCFInInterrupt();
-				FS4AlterFiles(handle[h].file, (((uint32_t) segregs[regds] << 4)) + ((uint32_t) regs.wordregs[regdx]), size);
-			}
-			break;
-		}
+            } else {
+                regs.wordregs[regax] = size;
+                ClearCFInInterrupt();
+                FS4AlterFiles(handle[h].file, (((uint32_t) segregs[regds] << 4)) + ((uint32_t) regs.wordregs[regdx]), size);
+            }
+            break;
+        }
 
-		case 0x40: // write to file or device
-		{
-			uint16_t h = regs.wordregs[regbx];
-			uint32_t size = regs.wordregs[regcx];
-			printf("DOS: write file handle: 0x%04x, %s, size:0x%04x\n", h, handle[h].filename, size);
-			regs.wordregs[regax] = size;
-			ClearCFInInterrupt();
+        case 0x40: // write to file or device
+        {
+            uint16_t h = regs.wordregs[regbx];
+            uint32_t size = regs.wordregs[regcx];
+            printf("DOS: write file handle: 0x%04x, %s, size:0x%04x\n", h, handle[h].filename, size);
+            regs.wordregs[regax] = size;
+            ClearCFInInterrupt();
             if (handle[h].isactive == false) {
                 printf("DOS: Error: handle not used\n");
                 exit_or_restart(1);
@@ -377,31 +377,31 @@ void HandleDosInterrupt() {
                 WriteFile(handle[h].file, data, size, handle[h].offset);
                 handle[h].offset += size;
                 break;
-			}
+            }
             printf("DOS: Error: Try to write to unknown file\n");
             exit_or_restart(1);
-			break;
-		}
+            break;
+        }
 
-		case 0x41: // Delete file
-		{
-			printf("DOS: delete file\n");
-			ReadFilename(filename);
-			ClearCFInInterrupt();
-			break;
-		}
+        case 0x41: // Delete file
+        {
+            printf("DOS: delete file\n");
+            ReadFilename(filename);
+            ClearCFInInterrupt();
+            break;
+        }
 
-		case 0x42: // Move File Pointer Using Handle
-		{
-			uint16_t h = regs.wordregs[regbx];
-			uint32_t offset = (((uint32_t) regs.wordregs[regcx]) << 16u) | regs.wordregs[regdx];
-			printf("DOS: file seek handle=0x%02x, mode=0x%02x offset=%i %s\n", h, al, offset, handle[h].filename);
-			if (handle[h].file == NULL) {
-				printf("DOS: Error: Invalid handle\n");
-				exit_or_restart(1);
-			}
-			switch(al) {
-			    case 0:
+        case 0x42: // Move File Pointer Using Handle
+        {
+            uint16_t h = regs.wordregs[regbx];
+            uint32_t offset = (((uint32_t) regs.wordregs[regcx]) << 16u) | regs.wordregs[regdx];
+            printf("DOS: file seek handle=0x%02x, mode=0x%02x offset=%i %s\n", h, al, offset, handle[h].filename);
+            if (handle[h].file == NULL) {
+                printf("DOS: Error: Invalid handle\n");
+                exit_or_restart(1);
+            }
+            switch(al) {
+                case 0:
                     handle[h].offset = offset;
                     break;
                 case 1:
@@ -410,22 +410,22 @@ void HandleDosInterrupt() {
                 case 2:
                     handle[h].offset = handle[h].file->size+offset; // TODO, is this correct?
                     break;
-			    default:
+                default:
                     printf("DOS: Error: Unknown seek mode %i\n", al);
                     exit_or_restart(1);
                     break;
-			}
+            }
             if (handle[h].offset > handle[h].file->size) {
                 printf("DOS: Error: seek too high\n");
                 exit_or_restart(1);
             }
 
-			ClearCFInInterrupt();
-			regs.wordregs[regdx] = handle[h].offset>>16;
-			regs.wordregs[regax] = handle[h].offset&0xFFFF;
-			//exit_or_restart(1);
-			break;
-		}
+            ClearCFInInterrupt();
+            regs.wordregs[regdx] = handle[h].offset>>16;
+            regs.wordregs[regax] = handle[h].offset&0xFFFF;
+            //exit_or_restart(1);
+            break;
+        }
         case 0x43: // get/set file attributes
             printf("DOS: get/set file attributes : mode=%i  ", al);
             ReadFilename(filename);
@@ -446,29 +446,29 @@ void HandleDosInterrupt() {
             }
             break;
 
-		case 0x44: // IOCTL
-			HandleIOCTL();
-			break;
+        case 0x44: // IOCTL
+            HandleIOCTL();
+            break;
 
-		case 0x48: // allocate memory
-		{
-			printf("DOS: allocate memory size: %5i segments at 0x%04x\n", regs.wordregs[regbx], nextfreeseg);
-			ClearCFInInterrupt();
-			regs.wordregs[regax] = Allocate(regs.wordregs[regbx]);
-			//exit_or_restart(1);
-			break;
-		}
+        case 0x48: // allocate memory
+        {
+            printf("DOS: allocate memory size: %5i segments at 0x%04x\n", regs.wordregs[regbx], nextfreeseg);
+            ClearCFInInterrupt();
+            regs.wordregs[regax] = Allocate(regs.wordregs[regbx]);
+            //exit_or_restart(1);
+            break;
+        }
 
-		case 0x49: { // free allocated memory
-			printf("DOS: free allocated memory: seg:0x%04x\n", segregs[reges]);
-			//printf("lastallocseg=0x%04x\n", lastallocseg);
-			Free(segregs[reges]);
-			ClearCFInInterrupt();
-			//exit_or_restart(1);
-			break;
-		}
+        case 0x49: { // free allocated memory
+            printf("DOS: free allocated memory: seg:0x%04x\n", segregs[reges]);
+            //printf("lastallocseg=0x%04x\n", lastallocseg);
+            Free(segregs[reges]);
+            ClearCFInInterrupt();
+            //exit_or_restart(1);
+            break;
+        }
 
-		case 0x4a: // modify allocated memory block
+        case 0x4a: // modify allocated memory block
         {
             // TODO handle memory segments correctly, see MCB.
             printf("DOS: modify allocated memory block size: %i segments ", regs.wordregs[regbx]);
@@ -496,90 +496,90 @@ void HandleDosInterrupt() {
             break;
         }
 
-		case 0x4c: // end program
-			printf("DOS: program exit with code %i\n", al);
-			exit_or_restart(al);
-			break;
+        case 0x4c: // end program
+            printf("DOS: program exit with code %i\n", al);
+            exit_or_restart(al);
+            break;
 
-		case 0x4e: // Find First Matching File
-		{
-			uint16_t attributes = regs.wordregs[regcx];
-			printf("DOS: find first matching file attribute : 0x%04x ", attributes);
-			ReadFilename(filename);
-			uint16_t index = 0;
-			FILEFS *file = FindFile(filename, &index);
-			if (file == NULL) {
-				SetCFInInterrupt();
-				regs.wordregs[regax] = 0x2; // File not found
-				printf("DOS: Warn: file not found\n");
-			} else {
-				ClearCFInInterrupt();
-				regs.wordregs[regax] = 0;
-				// http://stanislavs.org/helppc/int_21-4e.html
-				printf("DOS: found file %s\n", file->filename);
-				Write16Long(dtaseg, dtaofs + 0x6, index + 1); // store index for next matching file
-				Write8Long(dtaseg, dtaofs + 0x15, attributes); // attribute
-				Write16Long(dtaseg, dtaofs + 0x16, 0x0); // file time
-				Write16Long(dtaseg, dtaofs + 0x18, 0x0); // file date
-				Write16Long(dtaseg, dtaofs + 0x1A, file->size & 0xFFFF); // file size low
-				Write16Long(dtaseg, dtaofs + 0x1C, file->size >> 16); // file size high
-				for (int i = 0; i < 13; i++) Write8Long(dtaseg, dtaofs + 0x1E + i, 0);
-				for (int i = 0; i < strlen(file->filename); i++)
-					Write8Long(dtaseg, dtaofs + 0x1E + i, toupper(file->filename[i]));
-			}
-			break;
-		}
+        case 0x4e: // Find First Matching File
+        {
+            uint16_t attributes = regs.wordregs[regcx];
+            printf("DOS: find first matching file attribute : 0x%04x ", attributes);
+            ReadFilename(filename);
+            uint16_t index = 0;
+            FILEFS *file = FindFile(filename, &index);
+            if (file == NULL) {
+                SetCFInInterrupt();
+                regs.wordregs[regax] = 0x2; // File not found
+                printf("DOS: Warn: file not found\n");
+            } else {
+                ClearCFInInterrupt();
+                regs.wordregs[regax] = 0;
+                // http://stanislavs.org/helppc/int_21-4e.html
+                printf("DOS: found file %s\n", file->filename);
+                Write16Long(dtaseg, dtaofs + 0x6, index + 1); // store index for next matching file
+                Write8Long(dtaseg, dtaofs + 0x15, attributes); // attribute
+                Write16Long(dtaseg, dtaofs + 0x16, 0x0); // file time
+                Write16Long(dtaseg, dtaofs + 0x18, 0x0); // file date
+                Write16Long(dtaseg, dtaofs + 0x1A, file->size & 0xFFFF); // file size low
+                Write16Long(dtaseg, dtaofs + 0x1C, file->size >> 16); // file size high
+                for (int i = 0; i < 13; i++) Write8Long(dtaseg, dtaofs + 0x1E + i, 0);
+                for (int i = 0; i < strlen(file->filename); i++)
+                    Write8Long(dtaseg, dtaofs + 0x1E + i, toupper(file->filename[i]));
+            }
+            break;
+        }
 
-		case 0x4f: // Find Next Matching File
-		{
-			printf("DOS: find next matching file ");
-			ReadFilename(filename);
-			uint16_t index = Read16Long(dtaseg, dtaofs + 0x6);
-			FILEFS *file = FindFile(filename, &index);
-			if (file == NULL) {
-				SetCFInInterrupt();
-				regs.wordregs[regax] = 0x12; // no more files
-				//regs.wordregs[regax] = 0x2; // no more files
-				printf("DOS: Error: no more files\n");
-				//exit_or_restart(1);
-			} else {
-				ClearCFInInterrupt();
-				// http://stanislavs.org/helppc/int_21-4e.html
-				printf("DOS: found file %s\n", file->filename);
-				Write16Long(dtaseg, dtaofs + 0x6, index + 1); // store index for next matching file
-				Write16Long(dtaseg, dtaofs + 0x16, 0x0); // file time
-				Write16Long(dtaseg, dtaofs + 0x18, 0x0); // file date
-				Write16Long(dtaseg, dtaofs + 0x1A, file->size & 0xFFFF); // file size low
-				Write16Long(dtaseg, dtaofs + 0x1C, file->size >> 16); // file size high
-				for (int i = 0; i < 13; i++) Write8Long(dtaseg, dtaofs + 0x1E + i, 0);
-				for (int i = 0; i < strlen(file->filename); i++)
-					Write8Long(dtaseg, dtaofs + 0x1E + i, toupper(file->filename[i]));
-			}
-			break;
-		}
+        case 0x4f: // Find Next Matching File
+        {
+            printf("DOS: find next matching file ");
+            ReadFilename(filename);
+            uint16_t index = Read16Long(dtaseg, dtaofs + 0x6);
+            FILEFS *file = FindFile(filename, &index);
+            if (file == NULL) {
+                SetCFInInterrupt();
+                regs.wordregs[regax] = 0x12; // no more files
+                //regs.wordregs[regax] = 0x2; // no more files
+                printf("DOS: Error: no more files\n");
+                //exit_or_restart(1);
+            } else {
+                ClearCFInInterrupt();
+                // http://stanislavs.org/helppc/int_21-4e.html
+                printf("DOS: found file %s\n", file->filename);
+                Write16Long(dtaseg, dtaofs + 0x6, index + 1); // store index for next matching file
+                Write16Long(dtaseg, dtaofs + 0x16, 0x0); // file time
+                Write16Long(dtaseg, dtaofs + 0x18, 0x0); // file date
+                Write16Long(dtaseg, dtaofs + 0x1A, file->size & 0xFFFF); // file size low
+                Write16Long(dtaseg, dtaofs + 0x1C, file->size >> 16); // file size high
+                for (int i = 0; i < 13; i++) Write8Long(dtaseg, dtaofs + 0x1E + i, 0);
+                for (int i = 0; i < strlen(file->filename); i++)
+                    Write8Long(dtaseg, dtaofs + 0x1E + i, toupper(file->filename[i]));
+            }
+            break;
+        }
 
-		case 0x50: // Set process ID
-		{
-			printf("DOS: set process id %i\n", regs.wordregs[regbx]);
-			pspseg = regs.wordregs[regbx];
+        case 0x50: // Set process ID
+        {
+            printf("DOS: set process id %i\n", regs.wordregs[regbx]);
+            pspseg = regs.wordregs[regbx];
             Write16((dibseg<<4) + 0x330, pspseg); // flight simulator 4 needs this
-			break;
-		}
+            break;
+        }
 
-		case 0x51: // Get process ID
-		{
-			printf("DOS: get process id\n");
-			regs.wordregs[regbx] = pspseg; // this is always the segment of the psp
-			break;
-		}
+        case 0x51: // Get process ID
+        {
+            printf("DOS: get process id\n");
+            regs.wordregs[regbx] = pspseg; // this is always the segment of the psp
+            break;
+        }
 
-		case 0x52: // Get Pointer to DOS "INVARS"
-		{
-			printf("DOS: get dos info block\n");
-			segregs[reges] = dibseg;
-			regs.wordregs[regbx] = 0x0026;
-			break;
-		}
+        case 0x52: // Get Pointer to DOS "INVARS"
+        {
+            printf("DOS: get dos info block\n");
+            segregs[reges] = dibseg;
+            regs.wordregs[regbx] = 0x0026;
+            break;
+        }
 
         case 0x58: // get/set memory allocation strategy
         {
@@ -593,44 +593,44 @@ void HandleDosInterrupt() {
             break;
         }
 
-		default:
-			printf("DOS: Unknown DOS function ah=%02x\n", regs.byteregs[regah]);
-			PrintStatus();
-			exit_or_restart(1);
-			break;
-	}
+        default:
+            printf("DOS: Unknown DOS function ah=%02x\n", regs.byteregs[regah]);
+            PrintStatus();
+            exit_or_restart(1);
+            break;
+    }
 }
 
 void DOSInit() {
-	AllocInit();
+    AllocInit();
     dibseg = 0x80; // the same dosbox uses
 
     // the default dta is in the last 128 byte of the psp structure
-	dtaseg = nextfreeseg - 16;
-	dtaofs = 0x80;
+    dtaseg = nextfreeseg - 16;
+    dtaofs = 0x80;
 
-	pspseg = nextfreeseg-16; // program segment prefix
+    pspseg = nextfreeseg-16; // program segment prefix
 
-	memset(handle, 0, sizeof(HANDLE)*256);
-	for(int i=0; i<256; i++) handle[i].isactive = false;
+    memset(handle, 0, sizeof(HANDLE)*256);
+    for(int i=0; i<256; i++) handle[i].isactive = false;
 
-	handle[0].isfile = false;
+    handle[0].isfile = false;
     handle[0].isactive = true;
     handle[0].device_information = 0x80d3; // std input output, binary mode,
-	strcpy(handle[0].filename, "stdin");
+    strcpy(handle[0].filename, "stdin");
 
-	handle[1].isfile = false;
+    handle[1].isfile = false;
     handle[1].isactive = true;
     handle[1].device_information = 0x80d3;
-	strcpy(handle[1].filename, "stdout");
+    strcpy(handle[1].filename, "stdout");
 
-	handle[2].isfile = false;
+    handle[2].isfile = false;
     handle[2].isactive = true;
     handle[2].device_information = 0x80d3;
-	strcpy(handle[2].filename, "stderr");
+    strcpy(handle[2].filename, "stderr");
 
-	// dos info block, just after the bios data area
-	memset(&ram[dibseg<<4], 0x0, 0x400);
+    // dos info block, just after the bios data area
+    memset(&ram[dibseg<<4], 0x0, 0x400);
     Write16((dibseg<<4) + 4, 1);
 
     // dos environment variables

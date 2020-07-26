@@ -33,7 +33,7 @@ void PIC_out(uint16_t portnum, uint8_t value) {
 
         default:
             printf("unknown PIC port %i\n", portnum);
-			exit_or_restart(1);
+            exit_or_restart(1);
     }
 
 }
@@ -53,7 +53,7 @@ uint8_t PIC_nextinterrupt() {
             PIC_triggered = irr & (~imr);
             return 8 + i;
         }
-	exit_or_restart(1);
+    exit_or_restart(1);
     return 0; // never reached
 }
 
