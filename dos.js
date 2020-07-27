@@ -208,7 +208,7 @@ function getScancode(key) {
         case "AltRight":
             return 38;
     }
-    alert(key);
+    console.log("Unknown key " + key);
     return -1;
 }
 
