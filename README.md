@@ -17,7 +17,7 @@ Always when I start a new project I wonder what programming language I should us
 
 C is also the natural choice for WebAssembly as the language features fit perfect. It is like you write an ordinary C-library.
 
-clang of the [LLVM project](https://llvm.org/) offers the ideal compiler infractstructure to create customized WebAssembly files without any additional runtime code. As such my code implements parts of the libc such as printf, malloc and memcpy. Just enough to run the emulator. The result is a project that compiles naturally as a native executable and runs in the browser with just is a few hundred lines of glue code.
+clang of the [LLVM project](https://llvm.org/) offers the ideal compiler infrastructure to create customized WebAssembly files without any additional runtime code. As such my code implements parts of the libc such as printf, malloc and memcpy. Just enough to run the emulator. The result is a project that compiles naturally as a native executable and runs in the browser with just is a few hundred lines of glue code.
 
 In short, this is the technical feature list
 
