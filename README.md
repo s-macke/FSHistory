@@ -7,7 +7,7 @@ Play and Enjoy the History of Microsoft Flight Simulator
 
 ![web demonstration](images/slides.gif)
 
-Do you know how many Flight Simulators Microsoft developed? It has been more than [ten](https://en.wikipedia.org/wiki/Microsoft_Flight_Simulator) with [Microsoft Flight Simulator (2020)](https://de.wikipedia.org/wiki/Microsoft_Flight_Simulator_(2020)) being the latest version that is being released or has been released at the time of reading this document. 
+Do you know how many Flight Simulators Microsoft developed? It has been more than [ten](https://en.wikipedia.org/wiki/Microsoft_Flight_Simulator) with [Microsoft Flight Simulator (2020)](https://de.wikipedia.org/wiki/Microsoft_Flight_Simulator_(2020)) being the latest version that has been released. 
 
 See how it all began. Play the first four flight simulator games Microsoft developed from 1982 to 1989. It has full mouse and keyboard control and can be even enjoyed on your mobile. However a full IBM style keyboard is recommended.
 
