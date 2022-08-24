@@ -33,7 +33,7 @@ In short, this is the technical feature list
 To build the native executable make sure gcc and SDL2 is installed and run
 
 ```
-m̀ake
+make
 ```
 
 To compile the webassembly file install clang and run
