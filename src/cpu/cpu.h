@@ -5,7 +5,7 @@
  * This emulator Supports partial 32-Bit.
  */
 
-#include "../wasm_libc_wrapper/stdint.h"
+#include <stdint.h>
 
 #define regeax 0
 #define regecx 1

@@ -1,7 +1,7 @@
 #ifndef FS_H
 #define FS_H
 
-#include "../wasm_libc_wrapper/stdint.h"
+#include <stdint.h>
 
 typedef struct {
     char *filename;

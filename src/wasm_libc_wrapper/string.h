@@ -2,8 +2,9 @@
 #define STRING_H
 
 #ifndef __wasm__
-	#include <string.h>
-#else
+    #error "Wasm target only"
+#endif
+
 	typedef unsigned long wasm_size_t;
 	typedef long size_t;
 
@@ -14,7 +15,5 @@
 	wasm_size_t strlen(const char *s);
 	int strncmp(const char *s1, const char *s2, wasm_size_t n);
 	int strcmp(const char *s1, const char *s2);
-
-#endif
 
 #endif

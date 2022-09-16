@@ -1,7 +1,7 @@
 #ifndef RAM_H
 #define RAM_H
 
-#include "../wasm_libc_wrapper/stdint.h"
+#include <stdint.h>
 
 extern uint8_t *ram;
 

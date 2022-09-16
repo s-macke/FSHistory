@@ -8,7 +8,7 @@ rm -f fshistory.wasm
 #-flto
 #FEATURES="-mbulk-memory -msign-ext"
 #FEATURES="-msign-ext"
-make fshistory.wasm CC=clang LDFLAGS="--target=wasm32 $FEATURES" CFLAGS="-Os --target=wasm32 -DFS4 -Werror -DUNSAFE_RAM -Wimplicit-fallthrough $FEATURES"
+make fshistory.wasm CC=clang LDFLAGS="--target=wasm32 $FEATURES" CFLAGS="-Os --target=wasm32 -DFS4 -Isrc/wasm_libc_wrapper -Werror -DUNSAFE_RAM -Wimplicit-fallthrough $FEATURES"
 
 wasm-strip fshistory.wasm
 

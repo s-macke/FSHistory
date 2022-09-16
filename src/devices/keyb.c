@@ -2,8 +2,7 @@
 #include"pic.h"
 #include"../cpu/cpu.h"
 
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/stdio.h"
+#include <stdio.h>
 #include "../utils/exit_strategy.h"
 
 // The "8042" PS/2 Controller or its predecessors, dealing with keyboards and mice.

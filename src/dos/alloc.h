@@ -1,8 +1,8 @@
 #ifndef ALLOC_H
 #define ALLOC_H
 
-#include "../wasm_libc_wrapper/stdbool.h"
-#include "../wasm_libc_wrapper/stdint.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 uint16_t Allocate(uint16_t paragraphs);
 

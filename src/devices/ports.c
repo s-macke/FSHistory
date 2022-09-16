@@ -1,9 +1,7 @@
 #include "ports.h"
 #include "keyb.h"
-
-#include "../wasm_libc_wrapper/stdint.h"
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/stdio.h"
+#include <stdint.h>
+#include <stdio.h>
 #include "../utils/exit_strategy.h"
 
 #include "pic.h"

@@ -14,11 +14,11 @@
 
 #include "global.h"
 
-#include "../wasm_libc_wrapper/stddef.h"
-#include "../wasm_libc_wrapper/stdio.h"
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/string.h"
-#include "../wasm_libc_wrapper/ctype.h"
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
 #include "debugger.h"
 #include "cpu.h"

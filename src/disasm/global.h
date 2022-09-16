@@ -22,8 +22,8 @@
 
 /* Added by dtrg. */
 
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/stdio.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 #ifndef FALSE
 #    define FALSE 0

@@ -2,10 +2,10 @@
 #define STDLIB_H
 
 #ifndef __wasm__
-	#include <stdlib.h>
-#else
+    #error "Wasm target only"
+#endif
 
-#define NULL 0
+#include<stddef.h>
 
 typedef long size_t;
 
@@ -16,5 +16,4 @@ void free(void *ptr);
 
 void exit(int status);
 
-#endif
 #endif

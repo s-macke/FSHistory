@@ -12,10 +12,8 @@
 #include"rom.h"
 #include"disk.h"
 #include"../cpu/cpu.h"
-
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/stdio.h"
-#include "../wasm_libc_wrapper/string.h"
+#include <stdio.h>
+#include <string.h>
 #include "../utils/exit_strategy.h"
 
 // execute rom and dos functions

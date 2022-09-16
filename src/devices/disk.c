@@ -3,9 +3,9 @@
 #include"../fs/fs.h"
 #include"../devices/ram.h"
 
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/stdio.h"
-#include "../wasm_libc_wrapper/string.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include "../utils/exit_strategy.h"
 
 static FILEFS *file = NULL;

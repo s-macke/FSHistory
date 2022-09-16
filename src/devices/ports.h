@@ -1,7 +1,7 @@
 #ifndef PORTS_H
 #define PORTS_H
 
-#include "../wasm_libc_wrapper/stdint.h"
+#include <stdint.h>
 
 void portout (uint16_t portnum, uint8_t value);
 void portout16 (uint16_t portnum, uint16_t value);

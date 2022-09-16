@@ -4,6 +4,11 @@
 #include "stdlib.h"
 #include "string.h"
 
+#ifndef __wasm__
+    #error "Wasm target only"
+#endif
+
+
 extern char __heap_base; // start of dynamic memory allocation (heap). Exported by clang
 
 char *allocPointer = NULL;

@@ -1,6 +1,10 @@
 #ifndef STDARG_H
 #define STDARG_H
 
+#ifndef __wasm__
+    #error "Wasm target only"
+#endif
+
 #ifndef _VA_LIST
 typedef __builtin_va_list va_list;
 #define _VA_LIST

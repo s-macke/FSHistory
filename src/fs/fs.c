@@ -1,7 +1,7 @@
-#include "../wasm_libc_wrapper/stddef.h"
-#include "../wasm_libc_wrapper/string.h"
-#include "../wasm_libc_wrapper/stdio.h"
-#include "../wasm_libc_wrapper/stdlib.h"
+#include <stddef.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "../utils/exit_strategy.h"
 #include"fs.h"
 

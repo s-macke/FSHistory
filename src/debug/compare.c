@@ -1,7 +1,7 @@
-#include "../wasm_libc_wrapper/stdio.h"
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/stdint.h"
-#include "../wasm_libc_wrapper/string.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include "string.h"
 #include "../cpu/cpu.h"
 #include "../devices/ram.h"
 

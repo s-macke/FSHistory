@@ -2,9 +2,8 @@
 #include"ram.h"
 #include"../cpu/cpu.h"
 
-#include "../wasm_libc_wrapper/stdint.h"
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/stdio.h"
+#include <stdint.h>
+#include <stdio.h>
 #include "../utils/exit_strategy.h"
 
 void HandleBios() {

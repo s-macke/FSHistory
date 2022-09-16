@@ -1,6 +1,5 @@
 #include"pic.h"
-#include "../wasm_libc_wrapper/stdio.h"
-#include "../wasm_libc_wrapper/stdlib.h"
+#include <stdio.h>
 #include "../utils/exit_strategy.h"
 
 // https://www4.cs.fau.de/Lehre/WS05/V_BS/oostubs/web/aufgaben/aufgabe2/pic_info.shtml

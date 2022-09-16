@@ -1,7 +1,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include "../wasm_libc_wrapper/stdint.h"
+#include <stdint.h>
 
 // Screen dimension constants
 #define SCREEN_WIDTH  720

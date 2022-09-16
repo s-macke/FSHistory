@@ -1,5 +1,5 @@
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/stdio.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 #include "../cpu/cpu.h"
 #include "../sdl.h"

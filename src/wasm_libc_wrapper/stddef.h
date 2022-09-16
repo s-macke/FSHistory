@@ -2,9 +2,9 @@
 #define STDDEF_H
 
 #ifndef __wasm__
-	#include <stddef.h>
-#else
-    #define NULL 0
+    #error "Wasm target only"
 #endif
+
+    #define NULL 0
 
 #endif

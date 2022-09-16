@@ -1,8 +1,7 @@
 #include"pic.h"
 #include"pit.h"
 
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/stdio.h"
+#include <stdio.h>
 #include "../utils/exit_strategy.h"
 
 // https://wiki.osdev.org/Programmable_Interval_Timer

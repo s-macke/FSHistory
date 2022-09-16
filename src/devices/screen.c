@@ -1,6 +1,5 @@
-#include "../wasm_libc_wrapper/stdint.h"
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/float.h"
+#include <stdint.h>
+#include <stdlib.h>
 
 #include "screen.h"
 

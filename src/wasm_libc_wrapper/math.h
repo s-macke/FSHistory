@@ -2,8 +2,9 @@
 #define MATH_H
 
 #ifndef __wasm__
-	#include <math.h>
-#else
+	#error "header only for wasm target"
+#endif
+
     #define M_PI 3.14159265358979323846
 
     float sqrtf(float arg);
@@ -16,6 +17,5 @@
     float modff(float arg, float* arg2);
     float fminf(float arg, float arg2);
     float fmaxf(float arg, float arg2);
-#endif
 
 #endif

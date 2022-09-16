@@ -3,7 +3,7 @@
 
 // Intel 8253 prgrammable interval timer
 
-#include "../wasm_libc_wrapper/stdint.h"
+#include <stdint.h>
 
 void PIT_Init();
 

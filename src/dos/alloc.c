@@ -1,5 +1,4 @@
-#include "../wasm_libc_wrapper/stdio.h"
-#include "../wasm_libc_wrapper/stdlib.h"
+#include <stdio.h>
 #include "../utils/exit_strategy.h"
 
 #include "alloc.h"

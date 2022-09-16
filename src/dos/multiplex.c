@@ -1,6 +1,6 @@
-#include "../wasm_libc_wrapper/stdint.h"
+#include <stdint.h>
+#include <stdio.h>
 #include "../utils/exit_strategy.h"
-#include "../wasm_libc_wrapper/stdio.h"
 
 #include "../cpu/cpu.h"
 

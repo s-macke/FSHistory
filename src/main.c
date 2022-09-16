@@ -1,5 +1,5 @@
-#include "wasm_libc_wrapper/stdio.h"
-#include "wasm_libc_wrapper/stdlib.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 #include"devices/ram.h"
 #include"devices/vga.h"

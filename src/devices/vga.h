@@ -1,7 +1,7 @@
 #ifndef VGA_H
 #define VGA_H
 
-#include "../wasm_libc_wrapper/stdint.h"
+#include <stdint.h>
 
 //extern uint16_t VGA_SC[0x100], VGA_CRTC[0x100], VGA_ATTR[0x100], VGA_GC[0x100];
 

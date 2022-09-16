@@ -1,7 +1,7 @@
 #ifndef KEYB_H
 #define KEYB_H
 
-#include "../wasm_libc_wrapper/stdint.h"
+#include <stdint.h>
 
 void KeyDown(unsigned int scancode);
 void KeyUp(unsigned int scancode);

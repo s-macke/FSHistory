@@ -1,7 +1,7 @@
-#include "../wasm_libc_wrapper/stdint.h"
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/stdio.h"
-#include "../wasm_libc_wrapper/string.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include "../utils/exit_strategy.h"
 
 #include "../cpu/cpu.h"

@@ -1,8 +1,7 @@
 #include"clock.h"
 #include"../cpu/cpu.h"
 
-#include "../wasm_libc_wrapper/stdlib.h"
-#include "../wasm_libc_wrapper/stdio.h"
+#include <stdio.h>
 #include "../utils/exit_strategy.h"
 
 // System and Real Time Clock BIOS Services
