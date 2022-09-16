@@ -1,3 +1,4 @@
+#include "../wasm_libc_wrapper/stdlib.h"
 #include "../wasm_libc_wrapper/stdint.h"
 #include "../wasm_libc_wrapper/stdio.h"
 #include "../wasm_libc_wrapper/string.h"
@@ -47,6 +48,8 @@ end of file
 
 static int dibseg = 0x80; // dos info block segment
 
+#define MAX_HANDLES 256
+
 typedef struct {
     bool isactive;
     bool isfile;
@@ -55,14 +58,14 @@ typedef struct {
     char filename[64];
     uint16_t device_information;
 } HANDLE;
-static HANDLE handle[256];
+static HANDLE *handle = NULL;
 
 static uint16_t dtaseg = 0x1000 - 8; // should be the last 128 byte of the psp structure
 static uint16_t dtaofs = 0x0;
 
 // ------------------------------------
 
-static uint16_t pspseg = 0x1000-16; // program segment prefix
+static uint16_t pspseg = 0x1000 - 16; // program segment prefix
 
 void HandleIOCTL() {
     uint16_t al = regs.byteregs[regal];
@@ -148,8 +151,7 @@ void HandleDosInterrupt() {
         case 0x06: // character output
         {
             uint8_t c = regs.byteregs[regdl];
-            if (c == 0xFF)
-            {
+            if (c == 0xFF) {
                 printf("DOS: Not supported input request\n");
                 exit_or_restart(1);
             }
@@ -162,8 +164,8 @@ void HandleDosInterrupt() {
         case 0x09: // string output
         {
             printf("DOS: write string: ");
-            for(int i=0; i<1024; i++) {
-                char c = Read8((segregs[regds] << 4) + regs.wordregs[regdx]+i);
+            for (int i = 0; i < 1024; i++) {
+                char c = Read8((segregs[regds] << 4) + regs.wordregs[regdx] + i);
                 if (c == '$') break;
                 printf("%c", c);
             }
@@ -194,7 +196,8 @@ void HandleDosInterrupt() {
         case 0x25: // set interrupt vector
         {
             uint32_t intno = al & 0xFF;
-            printf("DOS: set interrupt vector : 0x%02x to 0x%04x:0x%04x\n", intno, segregs[regds], regs.wordregs[regdx]);
+            printf("DOS: set interrupt vector : 0x%02x to 0x%04x:0x%04x\n", intno, segregs[regds],
+                   regs.wordregs[regdx]);
             Write16((intno << 2) + 2, segregs[regds]);
             Write16((intno << 2) + 0, regs.wordregs[regdx]);
             break;
@@ -255,7 +258,8 @@ void HandleDosInterrupt() {
             uint16_t attributes = regs.wordregs[regcx];
             printf("DOS: create file mode : 0x%04x ", attributes);
             int nextfreehandle;
-            for(nextfreehandle=5; nextfreehandle<255; nextfreehandle++) if (!handle[nextfreehandle].isactive) break;
+            for (nextfreehandle = 5; nextfreehandle < 255; nextfreehandle++)
+                if (!handle[nextfreehandle].isactive) break;
             ReadFilename(handle[nextfreehandle].filename);
             handle[nextfreehandle].file = CreateFile(handle[nextfreehandle].filename);
             handle[nextfreehandle].isactive = true;
@@ -274,7 +278,8 @@ void HandleDosInterrupt() {
             printf("DOS: open file mode : 0x%02x ", accessmode);
             ReadFilename(filename);
             int nextfreehandle;
-            for(nextfreehandle=5; nextfreehandle<255; nextfreehandle++) if (!handle[nextfreehandle].isactive) break;
+            for (nextfreehandle = 5; nextfreehandle < 255; nextfreehandle++)
+                if (!handle[nextfreehandle].isactive) break;
 
             if (strcmp(filename, "EMMXXXX0") == 0) {
                 handle[nextfreehandle].isfile = false;
@@ -323,7 +328,7 @@ void HandleDosInterrupt() {
             uint16_t h = regs.wordregs[regbx];
             uint32_t size = regs.wordregs[regcx];
             printf("DOS: read from handle : 0x%02x, '%s' offset: %5i, size: %5i to 0x%04x:0x%04x ",
-                    h, handle[h].filename, handle[h].offset, size, segregs[regds], regs.wordregs[regdx]);
+                   h, handle[h].filename, handle[h].offset, size, segregs[regds], regs.wordregs[regdx]);
             if (handle[h].isactive == false) {
                 printf("DOS: Error: handle not used\n");
                 exit_or_restart(1);
@@ -349,7 +354,8 @@ void HandleDosInterrupt() {
             } else {
                 regs.wordregs[regax] = size;
                 ClearCFInInterrupt();
-                FS4AlterFiles(handle[h].file, (((uint32_t) segregs[regds] << 4)) + ((uint32_t) regs.wordregs[regdx]), size);
+                FS4AlterFiles(handle[h].file, (((uint32_t) segregs[regds] << 4)) + ((uint32_t) regs.wordregs[regdx]),
+                              size);
             }
             break;
         }
@@ -373,7 +379,7 @@ void HandleDosInterrupt() {
             }
             if (handle[h].isfile == true) {
                 printf("DOS: Write to file\n");
-                uint8_t* data = &ram[(((uint32_t)segregs[regds] << 4)) + ((uint32_t)regs.wordregs[regdx])];
+                uint8_t *data = &ram[(((uint32_t) segregs[regds] << 4)) + ((uint32_t) regs.wordregs[regdx])];
                 WriteFile(handle[h].file, data, size, handle[h].offset);
                 handle[h].offset += size;
                 break;
@@ -400,7 +406,7 @@ void HandleDosInterrupt() {
                 printf("DOS: Error: Invalid handle\n");
                 exit_or_restart(1);
             }
-            switch(al) {
+            switch (al) {
                 case 0:
                     handle[h].offset = offset;
                     break;
@@ -408,7 +414,7 @@ void HandleDosInterrupt() {
                     handle[h].offset += offset;
                     break;
                 case 2:
-                    handle[h].offset = handle[h].file->size+offset; // TODO, is this correct?
+                    handle[h].offset = handle[h].file->size + offset; // TODO, is this correct?
                     break;
                 default:
                     printf("DOS: Error: Unknown seek mode %i\n", al);
@@ -421,8 +427,8 @@ void HandleDosInterrupt() {
             }
 
             ClearCFInInterrupt();
-            regs.wordregs[regdx] = handle[h].offset>>16;
-            regs.wordregs[regax] = handle[h].offset&0xFFFF;
+            regs.wordregs[regdx] = handle[h].offset >> 16;
+            regs.wordregs[regax] = handle[h].offset & 0xFFFF;
             //exit_or_restart(1);
             break;
         }
@@ -562,7 +568,7 @@ void HandleDosInterrupt() {
         {
             printf("DOS: set process id %i\n", regs.wordregs[regbx]);
             pspseg = regs.wordregs[regbx];
-            Write16((dibseg<<4) + 0x330, pspseg); // flight simulator 4 needs this
+            Write16((dibseg << 4) + 0x330, pspseg); // flight simulator 4 needs this
             break;
         }
 
@@ -609,10 +615,14 @@ void DOSInit() {
     dtaseg = nextfreeseg - 16;
     dtaofs = 0x80;
 
-    pspseg = nextfreeseg-16; // program segment prefix
+    pspseg = nextfreeseg - 16; // program segment prefix
 
-    memset(handle, 0, sizeof(HANDLE)*256);
-    for(int i=0; i<256; i++) handle[i].isactive = false;
+    if (handle == NULL) {
+        handle = malloc(sizeof(HANDLE) * MAX_HANDLES);
+    }
+    memset(handle, 0, sizeof(HANDLE) * MAX_HANDLES);
+
+    for (int i = 0; i < 256; i++) handle[i].isactive = false;
 
     handle[0].isfile = false;
     handle[0].isactive = true;
@@ -630,8 +640,8 @@ void DOSInit() {
     strcpy(handle[2].filename, "stderr");
 
     // dos info block, just after the bios data area
-    memset(&ram[dibseg<<4], 0x0, 0x400);
-    Write16((dibseg<<4) + 4, 1);
+    memset(&ram[dibseg << 4], 0x0, 0x400);
+    Write16((dibseg << 4) + 4, 1);
 
     // dos environment variables
     memset(&ram[0x600], 0x0, 0x100);

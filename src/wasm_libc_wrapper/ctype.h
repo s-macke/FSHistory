@@ -5,7 +5,7 @@
 	#include <ctype.h>
 #else
 
-int toupper(int c);
+int toupper(int c); // returns the upper case version of the character c
 
 #endif
 

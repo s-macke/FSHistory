@@ -19,10 +19,11 @@ static int nfreepages = 0x3b4;
 
 typedef struct {
     uint32_t size; // in pages
-    uint8_t* data;
+    uint8_t *data;
 } EMSMap;
 
-static EMSMap map[256];
+static EMSMap *map = NULL;
+
 static int nexthandle;
 
 static int currenthandle[4];
@@ -56,7 +57,7 @@ void EMSInterrupt() {
             printf("EMS: get handle and allocate pages=%i\n", regs.wordregs[regbx]);
             regs.byteregs[regah] = 0x00;
             regs.wordregs[regdx] = nexthandle; // handle
-            map[nexthandle].data = malloc(PAGE_SIZE*regs.wordregs[regbx]);
+            map[nexthandle].data = malloc(PAGE_SIZE * regs.wordregs[regbx]);
             map[nexthandle].size = regs.wordregs[regbx];
             nfreepages -= regs.wordregs[regbx];
             nexthandle++;
@@ -65,15 +66,18 @@ void EMSInterrupt() {
         case 0x44: // map logical page into physical page window
         {
             int physical_page = regs.byteregs[regal];
-            printf("EMS: map logical page into physical page window handle=%i, physical=%i logical=%i\n", regs.wordregs[regdx], physical_page, regs.wordregs[regbx]);
-            uint8_t *physical_page_ptr = ram + base + physical_page*PAGE_SIZE;
+            printf("EMS: map logical page into physical page window handle=%i, physical=%i logical=%i\n",
+                   regs.wordregs[regdx], physical_page, regs.wordregs[regbx]);
+            uint8_t *physical_page_ptr = ram + base + physical_page * PAGE_SIZE;
 
             if (currenthandle[physical_page] != -1) {
-                memcpy(map[currenthandle[physical_page]].data + PAGE_SIZE*currentpage[physical_page], physical_page_ptr, PAGE_SIZE);
+                memcpy(map[currenthandle[physical_page]].data + PAGE_SIZE * currentpage[physical_page],
+                       physical_page_ptr, PAGE_SIZE);
             }
             currenthandle[physical_page] = regs.wordregs[regdx];
             currentpage[physical_page] = regs.wordregs[regbx];
-            memcpy(physical_page_ptr, map[currenthandle[physical_page]].data + PAGE_SIZE*currentpage[physical_page], PAGE_SIZE);
+            memcpy(physical_page_ptr, map[currenthandle[physical_page]].data + PAGE_SIZE * currentpage[physical_page],
+                   PAGE_SIZE);
             regs.byteregs[regah] = 0x00;
             break;
         }
@@ -83,7 +87,7 @@ void EMSInterrupt() {
             //regs.byteregs[regah] = 0x84; // undefined function 0x91 feature not supported
             //break;
 
-            switch(regs.byteregs[regal]) {
+            switch (regs.byteregs[regal]) {
 
                 case 2: // get size of partial page map
                     regs.byteregs[regah] = 0x00;
@@ -108,6 +112,11 @@ void EMSInterrupt() {
 }
 
 void EMSInit() {
+    if (map == NULL) {
+        map = (EMSMap *) malloc(sizeof(EMSMap) * 256);
+    }
+    memset((void *) map, 0, sizeof(EMSMap) * 256);
+
     nexthandle = 1;
     currenthandle[0] = -1;
     currenthandle[1] = -1;
@@ -117,5 +126,4 @@ void EMSInit() {
     currentpage[1] = -1;
     currentpage[2] = -1;
     currentpage[3] = -1;
-    memset(map, 0, sizeof(map));
 }

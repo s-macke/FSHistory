@@ -6,7 +6,7 @@
 typedef struct {
     char *filename;
     unsigned int size;
-    char *data;
+    uint8_t *data;
 } FILEFS;
 
 FILEFS *FindFile(const char *filename, uint16_t *index);

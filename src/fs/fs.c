@@ -10,7 +10,7 @@ static uint32_t fssize = 0;
 
 #define MAX_FILES 1024
 
-static FILEFS files[MAX_FILES];
+static FILEFS *files;
 static int nfiles;
 
 void toLowerCase(char *pstr) {
@@ -28,15 +28,16 @@ char* GetMountStorage(uint32_t size) {
 void FillFileFS(FILEFS *filefs, char* ptr) {
     filefs->filename = ptr;
     filefs->size = *(int32_t*)(ptr+256);
-    filefs->data = ptr+256+4;
+    filefs->data = (uint8_t*)ptr+256+4;
 }
 
 void FinishMountStorage() {
-
     char* ptr = fsdata;
     const char *ptrend = fsdata + fssize;
 
-    memset(files, 0, sizeof(files));
+    files = malloc(sizeof(FILEFS) * MAX_FILES);
+    memset(files, 0, sizeof(FILEFS) * MAX_FILES);
+
     nfiles = 0;
 
     while (ptr < ptrend) {
@@ -65,7 +66,7 @@ FILEFS *CreateFile(const char* filename) {
 void WriteFile(FILEFS *file, uint8_t* data, int size, int offset) {
     int newsize = offset+size;
     if (file->size < newsize) {
-        char* olddata = file->data;
+        uint8_t* olddata = file->data;
         unsigned int oldsize = file->size;
 
         file->data = malloc(newsize);

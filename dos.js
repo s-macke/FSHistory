@@ -456,6 +456,7 @@ function Main(version) {
         objs => {
             console.log("wasm file loaded");
             game = objs[0].instance.exports;
+            console.log(game) // Just show, what we loaded
             ram = new Uint8Array(importOb.env.memory.buffer, 0);
             game.Init();
             MountFs(objs[1]);
