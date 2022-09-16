@@ -1,16 +1,34 @@
+#include "stdarg.h"
 #include "stdio.h"
 #include "stdint.h"
 #include "stdlib.h"
 #include "string.h"
 
-char *allocPointer = (char *) 0x500000; // start of dynamic memory allocation (heap)
+extern char __heap_base; // start of dynamic memory allocation (heap). Exported by clang
+
+char *allocPointer = NULL;
+//char *allocPointer = (char *) 0x500000;
 
 extern void outputstr(const char *str);
 
-void *malloc(unsigned long size) {
+void *malloc(wasm_size_t size) {
+    if (allocPointer == NULL) { // First call: initialize
+        allocPointer = &__heap_base;
+    }
     void *p = allocPointer;
     allocPointer += size;
     return p;
+}
+
+// malloc, but sets the memory to 0
+void *calloc(wasm_size_t nmemb, wasm_size_t size) {
+    void *ptr = malloc(nmemb * size);
+    memset(ptr, 0, nmemb * size);
+    return ptr;
+}
+
+void free(void *ptr) {
+    // Do nothing
 }
 
 void *memcpy(void *dest, const void *src, unsigned long n) {
@@ -65,11 +83,27 @@ int sprintf(char *str, const char *format, ...) {
     return 0;
 }
 
+// Very basic printf implementation.
 int printf(const char *format, ...) {
+    /*
+    char buffer[256];
+    va_list args;
+    va_start(args, format);
+    vsprintf(buffer, format, args);
+    va_end(args);
+    outputstr(buffer);
+    return 0;
+     */
     outputstr(format);
     return 0;
 }
+/*
+int vsprintf (char *buffer, const char *format, __gnuc_va_list arg) {
+    int i = 0;
 
+    return 0;
+}
+*/
 int puts(const char *s) {
     outputstr(s);
     outputstr("\n");

@@ -4,13 +4,11 @@
 
 #include "screen.h"
 
-uint32_t *pixels = 0;
-float *zbuffer = 0;
+uint32_t *pixels = NULL;
 
 void ScreenInit() {
-    if (pixels == 0) {
+    if (pixels == NULL) {
         pixels = malloc(sizeof(int32_t) * SCREEN_WIDTH * SCREEN_HEIGHT);
-        zbuffer = malloc(sizeof(float) * SCREEN_WIDTH * SCREEN_HEIGHT);
     }
     ScreenClear();
 }
@@ -18,7 +16,6 @@ void ScreenInit() {
 void ScreenClear() {
     for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++) {
         pixels[i] = 0xFF000000;
-        zbuffer[i] = FLT_MAX;
     }
 }
 

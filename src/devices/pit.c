@@ -18,15 +18,14 @@ I/O port     Usage
 0x43         Mode/Command register (write only, a read is ignored)
 */
 
-uint8_t io_hi_lo = 0;
-int32_t counter0;
-int32_t timerdata0;
+static uint8_t io_hi_lo = 0;
+static int32_t counter0;
+static int32_t timerdata0;
 
 void PIT_count(int32_t instructions) {
     if (io_hi_lo == 1) return;
 
-    //counter0 -= instructions / 3; // approx 6 Million Instructions per second
-    counter0 -= instructions / 2;
+    counter0 -= instructions / 3; // approx 6 Million Instructions per second
     //counter0 -= instructions / 10;
     if (counter0 < 0) {
         //printf("trigger PIT\n");

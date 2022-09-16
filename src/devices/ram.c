@@ -8,7 +8,7 @@
 #include "../wasm_libc_wrapper/string.h"
 #include "../utils/exit_strategy.h"
 
-uint8_t *ram = 0;
+uint8_t *ram = NULL;
 
 //#define DEBUG
 
@@ -151,7 +151,7 @@ inline uint32_t Read32Long(uint16_t s, uint16_t o) {
 }
 
 void RAMInit() {
-    if (ram == 0) {
+    if (ram == NULL) {
         ram = malloc(1024 * 1024 + 65536);
     }
     memset(ram, 0, 1024 * 1024 + 65536);

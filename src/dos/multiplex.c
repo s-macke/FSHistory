@@ -4,8 +4,7 @@
 
 #include "../cpu/cpu.h"
 
-void DOS_Multiplex_Int()
-{
+void DOS_Multiplex_Int() {
     uint16_t ah = regs.byteregs[regah];
     uint16_t al = regs.byteregs[regal];
     //printf("DOS: ah: 0x%02x, al: 0x%02x\n", ah, al);

@@ -8,7 +8,6 @@
 #define SCREEN_HEIGHT 400
 
 extern uint32_t *pixels;
-extern float *zbuffer;
 
 void ScreenInit();
 void ScreenClear();

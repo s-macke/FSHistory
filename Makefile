@@ -1,4 +1,4 @@
-CC = gcc
+CC = clang
 CFLAGS = -O2 -DFS4 -DUNSAFE_RAM -Werror
 LDFLAGS = -lSDL2 -lm
 
@@ -12,7 +12,8 @@ fshistory: ${OBJS}
 	${CC} -o fshistory ${OBJS} ${LDFLAGS}
 
 fshistory.wasm: ${OBJS} libc.o
-	wasm-ld --import-memory --no-entry --strip-all --gc-sections --allow-undefined	\
+#--lto-O3
+	wasm-ld-12 --import-memory --no-entry --strip-all --gc-sections --allow-undefined --no-entry \
 	--export=SetFSVersion                                   \
 	--export=GetMountStorage                                \
 	--export=FinishMountStorage                             \
@@ -26,6 +27,7 @@ fshistory.wasm: ${OBJS} libc.o
 	--export=MouseButtonDown                                \
 	--export=MouseButtonUp                                  \
 	--export=MouseMotion                                    \
+	--export=__heap_base                                    \
 	-o fshistory.wasm ${OBJS} libc.o
 
 data/fs1.fs: data/fs1.fs.bz2

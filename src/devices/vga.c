@@ -9,7 +9,7 @@
 #include "screen.h"
 #include "ram.h"
 
-static uint8_t *vgaram = 0;
+static uint8_t *vgaram = NULL;
 
 /*
   https://www-user.tu-chemnitz.de/~kzs/tools/whatvga/vga.txt
@@ -333,7 +333,7 @@ static uint8_t vga_palette[248][3] =
                 {0x0b, 0x0c, 0x10}
         };
 
-uint32_t palette[256];
+uint32_t *palette;
 
 uint16_t vidmode = 3;
 uint32_t vidmemory = 0x18000;
@@ -351,7 +351,6 @@ uint8_t ega_read_map_select = 0x0;
 uint8_t active_ega_sequencer_reg = 0x0;
 uint8_t ega_sequencer_bitplanemask = 0x0F;
 uint8_t active_crt_reg = 0;
-
 
 int cursor_column = 0;
 int cursor_row = 0;
@@ -1188,11 +1187,16 @@ void VGA_Init() {
 
     cursor_column = 0;
     cursor_row = 0;
-    if (vgaram == 0) {
+
+    if (vgaram == NULL) {
         vgaram = malloc(0x10001 * 2 * 8);
     }
     memset(vgaram, 0, 0x10001 * 2 * 8);
-    memset(palette, 0, 256 * 4);
+
+    if (palette == NULL) {
+        palette = malloc(256 * sizeof(uint32_t));
+    }
+    memset(palette, 0, 256 * sizeof(uint32_t));
 
     for (int i = 0; i < 248; i++) {
         uint32_t r = vga_palette[i][0];
@@ -1200,5 +1204,4 @@ void VGA_Init() {
         uint32_t b = vga_palette[i][2];
         palette[i] = 0xFF000000 | (b << 18) | (g << 10) | (r << 2);
     }
-
 }

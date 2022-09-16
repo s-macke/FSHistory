@@ -103,7 +103,7 @@ void LoadMzExeFromFile(char* filename)
 }
 #endif
 
-void LoadMzExe(char *data, int size) {
+void LoadMzExe(uint8_t *data, int size) {
     IMAGE_DOS_HEADER head;
 
     memcpy(&head, data, sizeof(head));
@@ -181,7 +181,7 @@ void LoadMzExe(char *data, int size) {
     printf("MZ: Finished Loading Exe\n");
 }
 
-void LoadCOM(char *data, int size) {
+void LoadCOM(uint8_t *data, int size) {
     printf("COM: - size: %i\n", size);
     int seg = Allocate((size>>4) + 1 + 0x10);
     memcpy(&ram[(seg << 4) + 0x100], data, size);
