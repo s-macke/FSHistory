@@ -47,3 +47,21 @@ The software part of the repository is under the MIT license. Please read the li
 
 [project demo]: https://s-macke.github.io/FSHistory/
 
+## Easter Egg in Microsoft Flight Simulator
+
+Code sometimes has the property to duplicate and then popup at some unusual places. 
+So happened to me when I first heard about an Easter egg in the 40th Anniversary 
+Edition of the Flight Simulator. On the runway in a Diamond DA62, you press 
+the ELT switch. The screen in front of you changes and offers you to play the first
+four flight simulators.
+
+![MFS Easter Egg](images/MFS-Easter-Egg.jpg)
+
+Could it be, that this is my work? Yes, absolutely. With less 
+than 100kB in size and 1MB in RAM usage my program is very light-weight.   
+And of course, I know the bugs of my work. So I tried it, and yes: 
+Same FS versions with the same bugs.
+
+Now the biggest question. 
+How did this program pass their C code quality gate? 😀
+
