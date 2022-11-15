@@ -22,11 +22,11 @@ clang of the [LLVM project](https://llvm.org/) offers the ideal compiler infrast
 In short, this is the technical feature list
 
  * Developed in C.
- * Emulates an 8086 and features from a 286 and a 386 CPU.
+ * Emulates an 8086 CPU and features from a 286 and a 386 CPU.
  * Emulates keyboard, mouse, graphics, interrupt controller, timer controller.
  * Implements DOS and BIOS functions similar to DOSBOX.
  * Compiles to an ordinary executable by using the Simple DirectMedia Layer (SDL).
- * Compiles to WebAssembly via the LLVM compiler by using my own trivial libc implementation.
+ * Compiles to WebAssembly via the LLVM compiler by using my own trivial libc implementation. Zero dependencies. The size of the binary is 93 kB.
 
 ## How To Build
 
@@ -57,11 +57,7 @@ four DOS Flight Simulator versions.
 
 ![MFS Easter Egg](images/MFS-Easter-Egg.jpg)
 
-Could it be, that this is my work? Yes, absolutely. With less 
-than 100kB in size and 1MB in RAM usage my program is very light-weight.   
-And of course, I know the bugs of my work. So I tried it, and yes: 
-Same FS versions with the same bugs.
+Could it be, that this is a copy of my project? I downloaded the flight simulation, jumped into the Diamond and pressed the button. And yes, it really is a copy.
+I know the quirks of my emulation. 😀
 
-Now the biggest question. 
-How did this program pass their C code quality gate? 😀
-
+Now my biggest question. How did this program pass their C code quality gate? 😉
