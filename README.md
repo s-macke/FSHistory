@@ -7,9 +7,9 @@ Play and Enjoy the History of Microsoft Flight Simulator
 
 ![web demonstration](images/slides.gif)
 
-Do you know how many Flight Simulators Microsoft developed? It has been more than [ten](https://en.wikipedia.org/wiki/Microsoft_Flight_Simulator) with [Microsoft Flight Simulator (2020)](https://de.wikipedia.org/wiki/Microsoft_Flight_Simulator_(2020)) being the latest version that has been released. 
+Do you know how many Flight Simulators Microsoft published? It has been more than [ten](https://en.wikipedia.org/wiki/Microsoft_Flight_Simulator) with [Microsoft Flight Simulator (2020)](https://de.wikipedia.org/wiki/Microsoft_Flight_Simulator_(2020)) being the latest version that has been released. 
 
-See how it all began. Play the first four flight simulator games Microsoft developed from 1982 to 1989. It has full mouse and keyboard control and can be even enjoyed on your mobile. However a full IBM style keyboard is recommended.
+See how it all began. Play the first four flight simulator games from 1982 to 1989 originally developed by Sublogic and Bruce Artwick. It has full mouse and keyboard control and can be even enjoyed on your mobile. However a full IBM style keyboard is recommended.
 
 # Technical aspects
 
@@ -24,9 +24,9 @@ In short, this is the technical feature list
  * Developed in C.
  * Emulates an 8086 CPU and features from a 286 and a 386 CPU.
  * Emulates keyboard, mouse, graphics, interrupt controller, timer controller.
- * Implements DOS and BIOS functions similar to DOSBOX.
- * Compiles to an ordinary executable by using the Simple DirectMedia Layer (SDL).
- * Compiles to WebAssembly via the LLVM compiler by using my own trivial libc implementation. Zero dependencies. The size of the binary is 93 kB.
+ * Implements DOS and BIOS functions similar to [DOSBox](https://www.dosbox.com/).
+ * Compiles to an ordinary executable by using the Simple DirectMedia Layer ([SDL](http://www.libsdl.org/)).
+ * Compiles to WebAssembly via the LLVM compiler by using my own trivial libc implementation. Zero dependencies. The size of the binary is just 93 kB uncompressed.
 
 ## How To Build
 
