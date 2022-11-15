@@ -13,7 +13,7 @@ See how it all began. Play the first four flight simulator games from 1982 to 19
 
 # Technical aspects
 
-Always when I start a new project I wonder what programming language I should use. Most of the time the requirements are the same. It must be fast, typed and the result must presentable on a website. Especially I would like to keep it as simple as possible. C is usually my language of choice when the logic doesn't get too complicated. And this is exactly the case for such emulators. Low level hardware emulation on a low level language.
+Always when I start a new project I wonder what programming language I should use. Most of the time the requirements are the same. It must be fast, strongly typed and the result must presentable on a website. Especially I would like to keep it as simple as possible. C is usually my language of choice when the logic doesn't get too complicated. And this is exactly the case for such emulators. Low level hardware emulation on a low level language.
 
 C is also the natural choice for WebAssembly as the language features fit perfect. It is like you write an ordinary C-library.
 
@@ -59,3 +59,5 @@ four DOS Flight Simulator versions.
 
 Could it be, that this is a copy of my project? I downloaded the flight simulator, jumped into the Diamond and pressed the button. And yes, it really is a copy.
 I know the quirks of my emulation. 😀
+
+Many thanks to the developer of [Asobo Studio](https://www.asobostudio.com/games/microsoft-flight-simulator) who included this code.
