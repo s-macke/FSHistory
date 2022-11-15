@@ -59,5 +59,3 @@ four DOS Flight Simulator versions.
 
 Could it be, that this is a copy of my project? I downloaded the flight simulation, jumped into the Diamond and pressed the button. And yes, it really is a copy.
 I know the quirks of my emulation. 😀
-
-Now my biggest question. How did this program pass their C code quality gate? 😉
