@@ -57,5 +57,5 @@ four DOS Flight Simulator versions.
 
 ![MFS Easter Egg](images/MFS-Easter-Egg.jpg)
 
-Could it be, that this is a copy of my project? I downloaded the flight simulation, jumped into the Diamond and pressed the button. And yes, it really is a copy.
+Could it be, that this is a copy of my project? I downloaded the flight simulator, jumped into the Diamond and pressed the button. And yes, it really is a copy.
 I know the quirks of my emulation. 😀
