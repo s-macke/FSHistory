@@ -90,7 +90,7 @@ enum instructions
 {
     none, add, push, pop, or, adc, sbb, and, es, daa,
     sub, cs, das, xor, ss, aaa, cmp, ds, aas, inc, dec, jump, test, xchg,
-    mov, lea, nop, cbw, cwd, call, wait, pushf, popf, sahf, lahf, movs,
+    mov, lea, nop, cbw, cwd, call, __wait, pushf, popf, sahf, lahf, movs,
     cmps, stos, lods, scas, ret, les, lds, retf, intr, into, iret, rol,
     ror, rcl, rcr, shl, shr, sar, aam, aad, xlat, esc, loopne, loope, loop,
     jcxz, in, out, jmp, lock, repz, repnz, hlt, cmc, not, neg, mul, imul,
@@ -269,7 +269,7 @@ static struct Disasm
 { cbw },                        /* 0x98 */
 { cwd },                        /* 0x99 */
 { call,decode_far },            /* 0x9a */
-{ wait },                       /* 0x9b */
+{ __wait },                       /* 0x9b */
 { pushf },                      /* 0x9c */
 { popf },                       /* 0x9d */
 { sahf },                       /* 0x9e */
