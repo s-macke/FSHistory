@@ -1,6 +1,7 @@
 CC = clang
 CFLAGS = -O2 -DFS4 -DUNSAFE_RAM -Werror
-LDFLAGS = -lSDL2 -lm
+CFLAGS += $(shell sdl2-config --cflags)
+LDFLAGS = $(shell sdl2-config --libs)
 
 OBJS = main.o mz.o ram.o debugger.o cpu.o vga.o ports.o dos.o alloc.o keyb.o   \
 	sdl.o screen.o rom.o fs.o bios.o fonts.o pic.o pit.o mouse.o      \

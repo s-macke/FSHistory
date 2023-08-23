@@ -1,6 +1,6 @@
 #ifndef __wasm__
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #endif
 
