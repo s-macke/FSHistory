@@ -6,6 +6,7 @@
 
 // another small libc: implementation: https://github.com/Photosounder/MinQND-libc/tree/main
 // canidate for malloc: https://github.com/drmortalwombat/oscar64/blob/main/include/stdlib.c
+// cadiate for malloc: https://github.com/Photosounder/CITAlloc/
 
 #ifndef __wasm__
     #error "Wasm target only"
@@ -39,7 +40,7 @@ void free(void *ptr) {
     // Do nothing
 }
 
-#define BULK_MEMORY_THRESHOLD 4
+#define BULK_MEMORY_THRESHOLD 16
 
 void *memcpy(void *dest, const void *src, unsigned long n) {
 #if defined(__wasm_bulk_memory__)
