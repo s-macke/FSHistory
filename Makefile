@@ -27,6 +27,7 @@ fshistory.wasm: ${OBJS} libc.o
 	--export=MouseButtonDown                                \
 	--export=MouseButtonUp                                  \
 	--export=MouseMotion                                    \
+	--export=SetFSVersion                                   \
 	--export=__heap_base                                    \
 	-o fshistory.wasm ${OBJS} libc.o
 
