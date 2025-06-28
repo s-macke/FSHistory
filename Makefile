@@ -14,7 +14,7 @@ fshistory: ${OBJS}
 
 fshistory.wasm: ${OBJS} libc.o
 #--lto-O3
-	wasm-ld-14 --import-memory --no-entry --strip-all --gc-sections --allow-undefined --no-entry \
+	wasm-ld --import-memory --no-entry --strip-all --gc-sections --allow-undefined --no-entry \
 	--export=GetMountStorage                                \
 	--export=FinishMountStorage                             \
 	--export=Init                                           \
