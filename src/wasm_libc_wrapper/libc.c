@@ -4,6 +4,9 @@
 #include "stdlib.h"
 #include "string.h"
 
+// another small libc: implementation: https://github.com/Photosounder/MinQND-libc/tree/main
+// canidate for malloc: https://github.com/drmortalwombat/oscar64/blob/main/include/stdlib.c
+
 #ifndef __wasm__
     #error "Wasm target only"
 #endif
@@ -36,7 +39,12 @@ void free(void *ptr) {
     // Do nothing
 }
 
+#define BULK_MEMORY_THRESHOLD 4
+
 void *memcpy(void *dest, const void *src, unsigned long n) {
+#if defined(__wasm_bulk_memory__)
+    if (n > BULK_MEMORY_THRESHOLD) return __builtin_memcpy(dest, src, n);
+#endif
     // Typecast src and dest addresses to (char *)
     char *csrc = (char *) src;
     char *cdest = (char *) dest;
@@ -48,10 +56,13 @@ void *memcpy(void *dest, const void *src, unsigned long n) {
     return dest;
 }
 
-void *memset(void *s, int c, wasm_size_t n) {
-    uint8_t *d = (uint8_t *) s;
+void *memset(void *dest, int c, wasm_size_t n) {
+#if defined(__wasm_bulk_memory__)
+    if (n > BULK_MEMORY_THRESHOLD) return __builtin_memset(dest, c, n);
+#endif
+    uint8_t *d = (uint8_t *) dest;
     for (wasm_size_t i = 0; i < n; i++) d[i] = c;
-    return s;
+    return dest;
 }
 
 int memcmp(const void *buf1, const void *buf2, unsigned long count) {
